@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCore5Sample.Models;
 using ASPNETCore5Sample.ViewModels.Departments;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ASPNETCore5Sample.Controllers
 {
@@ -61,6 +64,16 @@ namespace ASPNETCore5Sample.Controllers
             _procedures.Department_Delete(id, del.RowVersion, returnValue).GetAwaiter().GetResult();
 
             return Ok();
+        }
+
+        /// <summary>
+        /// 取得部門課程數量
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("CourseCount/{id}")]
+        public async Task<ActionResult<IEnumerable<VwDepartmentCourseCount>>> GetCourseCounts(int id)
+        {            
+            return await _db.VwDepartmentCourseCount.FromSqlInterpolated($"SELECT * FROM vwDepartmentCourseCount WHERE DepartmentID = {id}").ToListAsync();            
         }
 
     }

@@ -14,51 +14,30 @@ namespace ASPNETCore5Sample.Controllers
     [ApiController]
     public class CourseController : BaseCRUDController<Course, int, CreateCourseModel, UpdateCourseModel>
     {
-        private readonly ContosoUniversityContext _db;
         public CourseController(ContosoUniversityContext db)
             :base(db)
         {
-            this._db = db;
         }
 
-        ///// <summary>
-        ///// 新增單筆資料
-        ///// </summary>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
-        //[HttpPost("")]
-        //public override ActionResult<Course> PostEntity(CreateCourseModel model)
-        //{
-        //    var addEntity = new Course();
-        //    addEntity.InjectFrom(model);
-        //    addEntity.CourseInstructor = model.CourseInstructor.Select(x => new CourseInstructor() { InstructorId = x.InstructorId }).ToList();
-        //    addEntity.Enrollment = model.Enrollment.Select(x => new Enrollment() { StudentId = x.StudentId, Grade = x.Grade }).ToList();
+        /// <summary>
+        /// 取得課程學生資料
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Student/{id}")]
+        public ActionResult<IEnumerable<object>> GetCourseStudents(int id)
+        {
+            return _db.VwCourseStudents.Where(x => x.CourseId == id).ToList();
+        }
 
-        //    _db.Add(addEntity);
-
-        //    _db.SaveChanges();
-
-        //    return Created("api/Course", addEntity);
-        //}
-
-        ///// <summary>
-        ///// 更新單筆資料
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
-        //[HttpPut("{id}")]
-        //public override IActionResult PutEntity(int id, UpdateCourseModel model)
-        //{
-        //    var updateEntity = _db.Course.Find(id);
-        //    updateEntity.InjectFrom(model);
-        //    updateEntity.CourseInstructor = model.CourseInstructor.Select(x => new CourseInstructor() { InstructorId = x.InstructorId }).ToList();
-        //    updateEntity.Enrollment = model.Enrollment.Select(x=> new Enrollment() { StudentId = x.StudentId, Grade = x.Grade }).ToList();
-
-        //    _db.SaveChanges();
-
-        //    return NoContent();
-        //}
+        /// <summary>
+        /// 取得課程學生數量資料
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("StudentCount/{id}")]
+        public ActionResult<IEnumerable<object>> GetCourseStudentCounts(int id)
+        {
+            return _db.VwCourseStudentCount.Where(x => x.CourseId == id).ToList();
+        }
 
     }
 }
