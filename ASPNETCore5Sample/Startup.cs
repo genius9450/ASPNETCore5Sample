@@ -23,7 +23,8 @@ namespace ASPNETCore5Sample
         {            
             services.AddDbContext<ContosoUniversityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-               
+            services.AddScoped<ContosoUniversityContextProcedures>();
+
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 

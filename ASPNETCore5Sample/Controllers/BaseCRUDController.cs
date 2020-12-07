@@ -13,7 +13,7 @@ namespace ASPNETCore5Sample.Controllers
     [ApiController]
     public class BaseCRUDController<TEntity, TPKey, TCreateViewModel, TUpdateViewModel> : ControllerBase where TEntity : class
     {
-        private readonly ContosoUniversityContext _db;
+        protected readonly ContosoUniversityContext _db;
         public BaseCRUDController(ContosoUniversityContext db)
         {
             this._db = db;
@@ -54,7 +54,7 @@ namespace ASPNETCore5Sample.Controllers
 
             _db.SaveChanges();
 
-            return Created("", addEntity);
+            return Created(this.HttpContext.Request.Path.Value, addEntity);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace ASPNETCore5Sample.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public virtual IActionResult PutEntity(TPKey id, TUpdateViewModel model)
+        public virtual ActionResult PutEntity(TPKey id, TUpdateViewModel model)
         {
             var updateEntity = _db.Set<TEntity>().Find(id);
             updateEntity.InjectFrom(model);
