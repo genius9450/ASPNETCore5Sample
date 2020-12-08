@@ -15,6 +15,7 @@
 - [x] DB First 
 > 使用EF Core Power Tools > Reverse Engineer，auto genernated DB Table Schema、Sored Pocedure
 - [x] Partial Class Extend DbContext
-> override SaveChanges => 實做帶入當前資料異動時間(DateModifie)、軟刪除(IsDeleted)
-> OnModelCreating => 搭配HasQueryFilter實做Global filter
-
+> - override SaveChanges => 實做帶入當前資料異動時間(DateModifie)、軟刪除(IsDeleted)
+> - OnModelCreating => 搭配HasQueryFilter實做Global filter
+- [x] Mapper
+> 使用ValueInjecter => 輕量AutoMapper
