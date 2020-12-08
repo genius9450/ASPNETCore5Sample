@@ -3,8 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-#nullable disable
-
 namespace ASPNETCore5Sample.Models
 {
     public partial class ContosoUniversityContext : DbContext
@@ -32,7 +30,8 @@ namespace ASPNETCore5Sample.Models
         {
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.HasIndex(e => e.DepartmentId, "IX_DepartmentID");
+                entity.HasIndex(e => e.DepartmentId)
+                    .HasName("IX_DepartmentID");
 
                 entity.Property(e => e.CourseId).HasColumnName("CourseID");
 
@@ -55,9 +54,11 @@ namespace ASPNETCore5Sample.Models
                 entity.HasKey(e => new { e.CourseId, e.InstructorId })
                     .HasName("PK_dbo.CourseInstructor");
 
-                entity.HasIndex(e => e.CourseId, "IX_CourseID");
+                entity.HasIndex(e => e.CourseId)
+                    .HasName("IX_CourseID");
 
-                entity.HasIndex(e => e.InstructorId, "IX_InstructorID");
+                entity.HasIndex(e => e.InstructorId)
+                    .HasName("IX_InstructorID");
 
                 entity.Property(e => e.CourseId).HasColumnName("CourseID");
 
@@ -76,7 +77,8 @@ namespace ASPNETCore5Sample.Models
 
             modelBuilder.Entity<Department>(entity =>
             {
-                entity.HasIndex(e => e.InstructorId, "IX_InstructorID");
+                entity.HasIndex(e => e.InstructorId)
+                    .HasName("IX_InstructorID");
 
                 entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
@@ -103,9 +105,11 @@ namespace ASPNETCore5Sample.Models
 
             modelBuilder.Entity<Enrollment>(entity =>
             {
-                entity.HasIndex(e => e.CourseId, "IX_CourseID");
+                entity.HasIndex(e => e.CourseId)
+                    .HasName("IX_CourseID");
 
-                entity.HasIndex(e => e.StudentId, "IX_StudentID");
+                entity.HasIndex(e => e.StudentId)
+                    .HasName("IX_StudentID");
 
                 entity.Property(e => e.EnrollmentId).HasColumnName("EnrollmentID");
 
@@ -129,11 +133,12 @@ namespace ASPNETCore5Sample.Models
                 entity.HasKey(e => e.InstructorId)
                     .HasName("PK_dbo.OfficeAssignment");
 
-                entity.HasIndex(e => e.InstructorId, "IX_InstructorID");
+                entity.HasIndex(e => e.InstructorId)
+                    .HasName("IX_InstructorID");
 
                 entity.Property(e => e.InstructorId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("InstructorID");
+                    .HasColumnName("InstructorID")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Location).HasMaxLength(50);
 

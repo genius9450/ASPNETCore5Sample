@@ -26,7 +26,7 @@ namespace ASPNETCore5Sample.Controllers
         [HttpGet("")]
         public virtual ActionResult<IEnumerable<TEntity>> GetEntitys()
         {
-            return this._db.Set<TEntity>().ToList();
+            return _db.Set<TEntity>().ToList();
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace ASPNETCore5Sample.Controllers
         [HttpGet("{id}")]
         public virtual ActionResult<TEntity> GetEntityById(TPKey id)
         {
-            return this._db.Set<TEntity>().Find(id);
+            return _db.Set<TEntity>().Find(id);
         }
 
         /// <summary>

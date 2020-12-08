@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace ASPNETCore5Sample.Models
 {
     public partial class VwCourseStudentCount
