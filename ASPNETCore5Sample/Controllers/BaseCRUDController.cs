@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ASPNETCore5Sample.Models;
 using Microsoft.AspNetCore.Mvc;
 using Omu.ValueInjecter;
-//using ASPNETCore5Sample.Models;
 
 namespace ASPNETCore5Sample.Controllers
 {
@@ -13,6 +11,11 @@ namespace ASPNETCore5Sample.Controllers
     [ApiController]
     public class BaseCRUDController<TEntity, TPKey, TCreateViewModel, TUpdateViewModel> : ControllerBase where TEntity : class
     {
+        /// <summary>
+        /// Entity Key Field Name
+        /// </summary>
+        public string PKeyName { get; set; } = "Id";
+
         protected readonly ContosoUniversityContext _db;
         public BaseCRUDController(ContosoUniversityContext db)
         {
@@ -50,11 +53,11 @@ namespace ASPNETCore5Sample.Controllers
         {
             TEntity addEntity = Activator.CreateInstance<TEntity>();
             addEntity.InjectFrom(model);
-            _db.Add(addEntity);
+            _db.Add(addEntity);                       
+            _db.SaveChanges();            
 
-            _db.SaveChanges();
-
-            return Created(this.HttpContext.Request.Path.Value, addEntity);
+            var id = addEntity.GetType().GetProperty(PKeyName).GetValue(addEntity);
+            return Created($"{this.HttpContext.Request.Path.Value}/{id}", addEntity);
         }
 
         /// <summary>

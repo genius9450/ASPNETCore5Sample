@@ -4,6 +4,7 @@ using ASPNETCore5Sample.ViewModels.Departments;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ASPNETCore5Sample.Controllers
 {
@@ -30,7 +31,7 @@ namespace ASPNETCore5Sample.Controllers
             OutputParameter<int> returnValue = new OutputParameter<int>();
             var output = _procedures.Department_Insert(model.Name, model.Budget, model.StartDate, model.InstructorId, returnValue).GetAwaiter().GetResult();
 
-            return Created("api/Department", output);
+            return Created($"api/Department/{output.FirstOrDefault()?.DepartmentID}", output);
         }
 
         /// <summary>

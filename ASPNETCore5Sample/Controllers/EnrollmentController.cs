@@ -11,6 +11,7 @@ namespace ASPNETCore5Sample.Controllers
         public EnrollmentController(ContosoUniversityContext db)
             : base(db)
         {
+            this.PKeyName = "EnrollmentId";
         }
 
     }

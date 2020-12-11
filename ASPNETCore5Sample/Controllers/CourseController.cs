@@ -17,6 +17,7 @@ namespace ASPNETCore5Sample.Controllers
         public CourseController(ContosoUniversityContext db)
             :base(db)
         {
+            this.PKeyName = "CourseId";
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace ASPNETCore5Sample.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Student/{id}")]
-        public ActionResult<IEnumerable<object>> GetCourseStudents(int id)
+        public ActionResult<IEnumerable<VwCourseStudents>> GetCourseStudents(int id)
         {
             return _db.VwCourseStudents.Where(x => x.CourseId == id).ToList();
         }
@@ -34,7 +35,7 @@ namespace ASPNETCore5Sample.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("StudentCount/{id}")]
-        public ActionResult<IEnumerable<object>> GetCourseStudentCounts(int id)
+        public ActionResult<IEnumerable<VwCourseStudentCount>> GetCourseStudentCounts(int id)
         {
             return _db.VwCourseStudentCount.Where(x => x.CourseId == id).ToList();
         }

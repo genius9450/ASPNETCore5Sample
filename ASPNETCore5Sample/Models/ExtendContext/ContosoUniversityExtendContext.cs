@@ -2,6 +2,8 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -40,6 +42,21 @@ namespace ASPNETCore5Sample.Models
 
         public override int SaveChanges()
         {
+            BeforeSaveHandler();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            BeforeSaveHandler();
+            return await base.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// 資料前處理
+        /// </summary>
+        private void BeforeSaveHandler()
+        {
             var now = DateTime.Now;
             var entries = ChangeTracker
                 .Entries()
@@ -48,18 +65,16 @@ namespace ASPNETCore5Sample.Models
             foreach (var entityEntry in entries)
             {
                 // 更新該筆資料異動時間
-                entityEntry.CurrentValues["DateModified"] = now;
+                entityEntry.CurrentValues.SetValues(new { DateModified = now });
 
                 // 有IsDeleted欄位註記為刪除狀態，反之則刪除資料
                 if (entityEntry.State == EntityState.Deleted && entityEntry.Entity.GetType().GetProperty("IsDeleted") != null)
                 {
-                    entityEntry.CurrentValues["IsDeleted"] = true;
+                    entityEntry.CurrentValues.SetValues(new { IsDeleted = true });
                     entityEntry.State = EntityState.Modified;
                 }
             }
 
-            return base.SaveChanges();
-        }        
-
+        }
     }
 }

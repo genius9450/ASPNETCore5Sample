@@ -11,6 +11,7 @@ namespace ASPNETCore5Sample.Controllers
         public OfficeAssignmentController(ContosoUniversityContext db)
             : base(db)
         {
+            this.PKeyName = "InstructorId";
         }
 
     }
