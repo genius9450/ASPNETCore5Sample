@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace ASPNETCore5Sample.Controllers
 {
@@ -26,6 +27,8 @@ namespace ASPNETCore5Sample.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
         public override ActionResult<Department> PostEntity(CreateDepartmentModel model)
         {
             OutputParameter<int> returnValue = new OutputParameter<int>();
@@ -41,6 +44,8 @@ namespace ASPNETCore5Sample.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public override ActionResult PutEntity(int id, UpdateDepartmentModel model)
         {
             var updateEntity = _db.Department.Find(id);
