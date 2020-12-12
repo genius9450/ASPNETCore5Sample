@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ASPNETCore5Sample.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Omu.ValueInjecter;
 
@@ -67,10 +68,17 @@ namespace ASPNETCore5Sample.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public virtual ActionResult PutEntity(TPKey id, TUpdateViewModel model)
         {
             var updateEntity = _db.Set<TEntity>().Find(id);
             updateEntity.InjectFrom(model);
+
+            if(updateEntity == null)
+            {
+                return NotFound();
+            }
 
             _db.SaveChanges();
 

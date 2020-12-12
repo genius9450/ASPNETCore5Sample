@@ -20,6 +20,12 @@ namespace ASPNETCore5Sample.Controllers
             this.PKeyName = "CourseId";
         }
 
+        [HttpGet("GetError")]
+        public void GetError()
+        {
+            throw new Exception("發生例外錯誤Here");
+        }
+
         /// <summary>
         /// 取得課程學生資料
         /// </summary>

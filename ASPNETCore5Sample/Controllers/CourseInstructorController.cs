@@ -4,6 +4,7 @@ using ASPNETCore5Sample.ViewModels.CourseInstructor;
 using System.Collections.Generic;
 using System.Linq;
 using Omu.ValueInjecter;
+using Microsoft.AspNetCore.Http;
 
 namespace ASPNETCore5Sample.Controllers
 {
@@ -44,6 +45,8 @@ namespace ASPNETCore5Sample.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
         public virtual ActionResult PostEntity(CreateOrUpdateCourseInstructorModel model)
         {
             CourseInstructor addEntity = new CourseInstructor();
