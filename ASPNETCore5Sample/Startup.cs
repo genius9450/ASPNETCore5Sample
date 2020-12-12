@@ -1,3 +1,4 @@
+using ASPNETCore5Sample.Attributes;
 using ASPNETCore5Sample.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,9 @@ namespace ASPNETCore5Sample
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNEWCore5Demo v1"));
             }
+
+            app.UseExceptionHandler("/Error");
+            //app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 
